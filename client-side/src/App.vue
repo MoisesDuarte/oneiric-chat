@@ -3,13 +3,8 @@
 </template>
 
 <script>
-import SocketService from '@/services/socket.service';
-
 export default {
   name: 'App',
-  created() {
-    SocketService.connect();
-  },
 }
 </script>
 

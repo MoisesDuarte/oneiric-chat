@@ -16,17 +16,22 @@
       </ul>
     </section>
 
-    <section class="room-messages">
+    <section class="room-messages" ref="roomMessages">
       <ul>
-        <li>
+        <li v-for="(message, index) in messages" :key="index">
           <span>User A - 2:00pm</span><br>
-          <span>Hello, welcome to the room!</span>
+          <span>{{ message }}</span>
         </li>
       </ul>
     </section>
 
     <section class="message-input">
-      <input v-model="message" type="text">
+      <input 
+        v-model="sentMsg" 
+        ref="sentMsg" 
+        type="text"
+        @keydown.enter="onSendMessage()"
+      />
       <button @click="onSendMessage()">Send</button>
     </section>
   </div>
@@ -34,13 +39,13 @@
 
 <script>
 import router from "@/router"
-import SocketService from '@/services/socket.service';
 
 export default {
   name: 'Chat',
   data() {
     return {
-      message: '',
+      messages: [],
+      sentMsg: '',
     }
   },
   methods: {
@@ -48,17 +53,25 @@ export default {
       router.push({ name: 'Login' });
     },
     onSendMessage() {
-      SocketService.emitMessage(this.message);
-      this.message = '';
+      this.$socket.emit('chatMessage', this.sentMsg);
+      this.sentMsg = '';
+      this.$refs.sentMsg.focus();
     },
+  },
+  created() {
+    this.$socket.on('message', msg => {
+      this.messages.push(msg);
+    });
   },
 }
 </script>
 
 <style lang="less">
 .room {
+  border: 1px solid black;
   width: 60%;
   margin: auto;
+  margin-top: 1em;
   display: grid;
   grid-template-areas: 
     'title title title'
@@ -95,12 +108,16 @@ export default {
     grid-area: messages; 
     height: 300px;
     padding: 8px;
-    overflow-y: hidden;
+    overflow-y: scroll;
 
     ul {
       list-style: none;
       margin: 0;
       padding: 0;
+
+      li {
+        margin-bottom: 16px;
+      }
     }
   }
 
