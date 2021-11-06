@@ -18,9 +18,9 @@
 
     <section class="room-messages" ref="roomMessages">
       <ul>
-        <li v-for="(message, index) in messages" :key="index">
-          <span>User A - 2:00pm</span><br>
-          <span>{{ message }}</span>
+        <li v-for="({ username, text, time }, index) in messages" :key="index">
+          <span><b>{{ username }} - {{ time }}</b></span><br>
+          <span>{{ text }}</span>
         </li>
       </ul>
     </section>

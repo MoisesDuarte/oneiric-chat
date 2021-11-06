@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
+const formatMessage = require('./utils/messages');
 
 const app = express();
 const server = http.createServer(app);
@@ -11,21 +12,23 @@ const io = socketio(server, {
 });
 
 // * Socket
+const botName = 'OneiricRoom Bot';
+
 io.on('connection', (socket) => {
   // ? Welcome current user
-  socket.emit('message', 'Welcome to Oneiric Chat');
+  socket.emit('message', formatMessage(botName, 'Welcome to Oneiric Chat'));
 
   // ? Broadcast when an user connects
-  socket.broadcast.emit('message', 'A user has joined the chat!');
+  socket.broadcast.emit('message', formatMessage(botName, 'A user joined the chat!'));
 
   // ? Runs when client disconnects (emit to all)
   socket.on('disconnect', () => {
-    io.emit('message', 'A user has left the chat!');
+    io.emit('message', formatMessage(botName, 'A user left the chat!'));
   });
 
   // ? Listen for chat messages
   socket.on('chatMessage', (msg) => {
-    io.emit('message', msg);
+    io.emit('message', formatMessage('USER', msg));
   });
 });
 
