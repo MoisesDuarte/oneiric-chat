@@ -4,7 +4,7 @@ class SocketService {
     socket;
     constructor() {}
 
-    setupSocketConnection() {
+    connect() {
         this.socket = io('http://localhost:3000');
     }
 
