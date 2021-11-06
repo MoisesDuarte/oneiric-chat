@@ -26,20 +26,30 @@
     </section>
 
     <section class="message-input">
-      <input type="text">
-      <button>Send</button>
+      <input v-model="message" type="text">
+      <button @click="onSendMessage()">Send</button>
     </section>
   </div>
 </template>
 
 <script>
 import router from "@/router"
+import SocketService from '@/services/socket.service';
 
 export default {
   name: 'Chat',
+  data() {
+    return {
+      message: '',
+    }
+  },
   methods: {
     onLeaveRoom() {
       router.push({ name: 'Login' });
+    },
+    onSendMessage() {
+      SocketService.emitMessage(this.message);
+      this.message = '';
     },
   },
 }
