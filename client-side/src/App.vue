@@ -8,12 +8,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 * {
   box-sizing: border-box;
 }
 
 body {
+  background: @color-base-1;
+  color: @color-base-3;
   margin: 0;
   padding: 0;
 }
