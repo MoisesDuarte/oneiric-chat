@@ -48,7 +48,7 @@ export default {
 
 <style lang="less" scoped>
 .input-group {
-  margin-bottom: 18px;
+  width: 100%;
 
   label, input, select {
     display: block;

@@ -33,9 +33,14 @@ export default {
     border: 1px solid @color-base-3;
     border-radius: 2px;
     padding: 6px 12px;
-    margin-bottom: 1em;
     cursor: pointer;
-     -webkit-appearance: none;
+    -webkit-appearance: none;
+
+    &.primary {
+      background: @color-primary;
+      border: 1px solid @color-primary;
+      color: @color-base-3;  
+    }
 
     &.success {
       background: @color-success;

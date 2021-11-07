@@ -2,9 +2,9 @@
   <div class="room">
     <nav class="room-title">
       <span>{{ roomName }}</span>
-      <button @click="onLeaveRoom()">
+      <AppButton color="success" @click="onLeaveRoom()">
         Leave Room
-      </button>
+      </AppButton>
     </nav>
 
     <section class="room-users">
@@ -26,22 +26,31 @@
     </section>
 
     <section class="message-input">
-      <input 
-        v-model="sentMsg" 
-        ref="sentMsg" 
-        type="text"
+      <AppInput
+        v-model="sentMsg"
         @keydown.enter="onSendMessage()"
       />
-      <button @click="onSendMessage()">Send</button>
+      <AppButton 
+        color="primary"
+        @click="onSendMessage()">
+        Send
+      </AppButton>
     </section>
   </div>
 </template>
 
 <script>
-import router from "@/router"
+import router from "@/router";
+
+import AppInput from "../components/AppInput.vue";
+import AppButton from "../components/AppButton.vue";
 
 export default {
   name: 'Chat',
+  components: {
+    AppInput,
+    AppButton,
+  },
   data() {
     return {
       roomName: '',
@@ -59,7 +68,6 @@ export default {
     onSendMessage() {
       this.$socket.emit('chatMessage', this.sentMsg);
       this.sentMsg = '';
-      this.$refs.sentMsg.focus();
     },
   },
   created() {
@@ -81,8 +89,7 @@ export default {
 
 <style lang="less">
 .room {
-  border: 1px solid black;
-  width: 60%;
+  width: 800px;
   margin: auto;
   margin-top: 1em;
   display: grid;
@@ -90,18 +97,23 @@ export default {
     'title title title'
     'users messages messages'
     'input input input';
+  grid-template-columns: 200px 300px 300px;
 
   .room-title { 
     grid-area: title;
-    border-bottom: 1px solid black; 
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    background: @color-base-3;
+    color: @color-base-1;
+    font-size: 1.25rem;
     padding: 8px;
   }
 
   .room-users {
+    border-left: 2px solid @color-base-2;
+    border-right: 2px solid @color-base-2;
     grid-area: users; 
-    border-right: 1px solid black;
     padding: 8px;
 
     p {
@@ -136,9 +148,10 @@ export default {
 
   .message-input { 
     grid-area: input;
-    border-top: 1px solid black;
     display: flex;
-    padding: 8px;
+    gap: 6px;
+    align-items: center;
+    padding-top: 8px;
 
     input {
       flex-grow: 1;
