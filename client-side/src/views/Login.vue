@@ -60,6 +60,13 @@ export default {
       router.push({ name: 'Room' });
     },
   },
+  created() {
+    const session = this.$cookies.get('USER');
+
+    if (session) {
+      router.push({ name: 'Room' });
+    }
+  },
 }
 </script>
 

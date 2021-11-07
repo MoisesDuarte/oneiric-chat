@@ -27,6 +27,7 @@
 
     <section class="message-input">
       <AppInput
+        id="message-input"
         v-model="sentMsg"
         @keydown.enter="onSendMessage()"
       />
@@ -62,7 +63,7 @@ export default {
   methods: {
     onLeaveRoom() {
       this.$socket.emit('leaveRoom');
-      this.$cookies.set('USER', {});
+      this.$cookies.remove('USER');
       router.push({ name: 'Login' });
     },
     onSendMessage() {
@@ -72,17 +73,21 @@ export default {
   },
   created() {
     const session = this.$cookies.get('USER');
-    
-    this.$socket.emit('joinRoom', session);
 
-    this.$socket.on('roomUsers', ({ room, users }) => {
-      this.roomName = room;
-      this.users = users;
-    });
+    if (session) {
+      this.$socket.emit('joinRoom', session);
 
-    this.$socket.on('message', msg => {
-      this.messages.push(msg);
-    });
+      this.$socket.on('roomUsers', ({ room, users }) => {
+        this.roomName = room;
+        this.users = users;
+      });
+
+      this.$socket.on('message', msg => {
+        this.messages.push(msg);
+      });
+    } else {
+      router.push({ name: 'Login' });
+    }    
   },
 }
 </script>
