@@ -1,7 +1,7 @@
 # Oneiric Chat
 
 ## Description
-Vue + Node chat with rooms using socket.io library
+Vue 3 + Node chat with rooms using socket.io library
 
 ## Project Setup
 
@@ -23,7 +23,7 @@ npm run dev
 
 ### Client-side
 
-#### Create a local copy of env.local.template in root directory
+#### Create a local copy of env.local.template in ./client-side directory
 ```
 VUE_APP_SERVER_HOST='http://localhost:3000'
 ```
@@ -39,6 +39,7 @@ npm run serve
 ```
 
 ## Dependencies
+- npm: 14.17.0
 ### Server-side
 - dotenv: ^10.0.0
 - express: ^4.17.1
