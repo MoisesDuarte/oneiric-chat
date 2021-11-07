@@ -19,8 +19,8 @@
     <section class="room-messages" ref="roomMessages">
       <ul>
         <li v-for="({ username, text, time }, index) in messages" :key="index">
-          <span><b>{{ username }} - {{ time }}</b></span><br>
-          <span>{{ text }}</span>
+          <div class="user"><b>{{ username }}</b> - {{ time }}</div>
+          <div class="message">{{ text }}</div>
         </li>
       </ul>
     </section>
@@ -111,8 +111,8 @@ export default {
   }
 
   .room-users {
-    border-left: 2px solid @color-base-2;
-    border-right: 2px solid @color-base-2;
+    background-color: @color-base-3-accent;
+    color: @color-base-1;
     grid-area: users; 
     padding: 8px;
 
@@ -142,6 +142,17 @@ export default {
 
       li {
         margin-bottom: 16px;
+
+        .user {
+          font-size: 0.875rem;
+          margin-bottom: 6px;
+        }
+
+        .message {
+          border-radius: 4px;
+          padding: 8px;
+          background-color: @color-base-2;
+        }
       }
     }
   }

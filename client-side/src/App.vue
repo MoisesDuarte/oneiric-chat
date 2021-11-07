@@ -7,6 +7,7 @@
 export default {
   name: 'App',
   created() {
+    // ? Listen for any connection errors on socket
     this.$socket.on('connect_error', () => {
       router.push({ name: '503' });
     });

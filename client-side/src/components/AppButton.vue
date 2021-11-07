@@ -39,6 +39,7 @@ export default {
     border-radius: 2px;
     padding: 6px 12px;
     cursor: pointer;
+    font-weight: 600;
     -webkit-appearance: none;
 
     &.primary {
