@@ -107,37 +107,41 @@ export default {
 
 <style lang="less">
 .room {
-  width: 800px;
+  width: 100%;
+  height: 100vh;
   margin: auto;
-  margin-top: 1em;
   display: grid;
   grid-template-areas: 
     'title title title'
     'users messages messages'
     'input input input';
-  grid-template-columns: 200px 300px 300px;
+  grid-template-columns: 20% 40% 40%;
+  grid-template-rows: 48px 600px 48px;
 
   .room-title { 
     grid-area: title;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: @color-base-3;
-    color: @color-base-1;
+    background: @color-base-1-accent;
+    color: @color-base-3;
     font-size: 1.25rem;
     padding: 8px;
   }
 
   .room-users {
-    background-color: @color-base-3-accent;
-    color: @color-base-1;
+    background-color: @color-base-2-accent;
+    color: @color-base-3;
     grid-area: users; 
     padding: 8px;
+    overflow: hidden;
+    overflow-y: auto;
 
     p {
       margin: 0;
       padding: 0;
       font-weight: 600;
+      font-size: 1.25rem;
     }
 
     ul {
@@ -149,7 +153,7 @@ export default {
 
   .room-messages { 
     grid-area: messages; 
-    height: 300px;
+    height: 100%;
 
     ul {
       height: 100%;
@@ -158,7 +162,7 @@ export default {
       padding: 0;
       padding: 8px;
       overflow: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
 
       li {
         margin-bottom: 16px;
@@ -181,8 +185,9 @@ export default {
     grid-area: input;
     display: flex;
     gap: 6px;
+    border-top: 6px solid @color-base-2-accent;
+    padding: 6px;
     align-items: center;
-    padding-top: 8px;
 
     input {
       flex-grow: 1;
