@@ -4,6 +4,9 @@ const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const { userEnter, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users');
 
+// ? Dotenv configuration
+require('dotenv').config()
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server, {
@@ -86,7 +89,7 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = 3000 || process.env.PORT;
+const PORT = process.env.PORT;
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
