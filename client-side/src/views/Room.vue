@@ -1,7 +1,7 @@
 <template>
   <div class="room">
     <nav class="room-title">
-      <span>Room Name</span>
+      <span>{{ roomName }}</span>
       <button @click="onLeaveRoom()">
         Leave Room
       </button>
@@ -10,9 +10,9 @@
     <section class="room-users">
       <p>Users</p>
       <ul>
-        <li>User A</li>
-        <li>User B</li>
-        <li>User C</li>
+        <li v-for="({ username }, index) in users" :key="index">
+          {{ username }}
+        </li>
       </ul>
     </section>
 
@@ -44,12 +44,16 @@ export default {
   name: 'Chat',
   data() {
     return {
+      roomName: '',
+      users: [],
       messages: [],
       sentMsg: '',
     }
   },
   methods: {
     onLeaveRoom() {
+      this.$socket.emit('leaveRoom');
+      this.$cookies.set('USER', {});
       router.push({ name: 'Login' });
     },
     onSendMessage() {
@@ -59,6 +63,15 @@ export default {
     },
   },
   created() {
+    const session = this.$cookies.get('USER');
+    
+    this.$socket.emit('joinRoom', session);
+
+    this.$socket.on('roomUsers', ({ room, users }) => {
+      this.roomName = room;
+      this.users = users;
+    });
+
     this.$socket.on('message', msg => {
       this.messages.push(msg);
     });

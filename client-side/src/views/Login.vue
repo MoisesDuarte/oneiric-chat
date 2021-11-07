@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.$cookies.set('USER', JSON.stringify({ username: this.username, room: this.room }));
       router.push({ name: 'Room' });
     },
   },
