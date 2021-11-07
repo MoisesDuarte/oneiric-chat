@@ -12,6 +12,10 @@ const io = socketio(server, {
   }
 });
 
+app.get('/', (req, res) =>  {
+  res.send('Server is up');
+});
+
 // * Socket
 const botName = 'OneiricRoom Bot';
 

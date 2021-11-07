@@ -2,9 +2,15 @@
   <router-view/>
 </template>
 
-<script>
+<script>import router from "./router";
+
 export default {
   name: 'App',
+  created() {
+    this.$socket.on('connect_error', () => {
+      router.push({ name: '503' });
+    });
+  },
 }
 </script>
 

@@ -27,8 +27,13 @@ export default {
 
 <style lang="less" scoped>
 .button-container {
+  &.full-width {
+    button {
+      width: 100%;
+    }
+  }
+  
   button {
-    width: 100%;
     background: @color-base-3;
     border: 1px solid @color-base-3;
     border-radius: 2px;
@@ -45,6 +50,12 @@ export default {
     &.success {
       background: @color-success;
       border: 1px solid @color-success;
+      color: @color-base-3;
+    }
+
+    &.warning {
+      background: @color-warning;
+      border: 1px solid @color-warning;
       color: @color-base-3;
     }
   }

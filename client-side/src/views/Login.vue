@@ -13,7 +13,7 @@
         v-model="selectedRoom"
       />
 
-      <AppButton type="submit" color="success">
+      <AppButton type="submit" color="success" class="full-width">
         Enter Room
       </AppButton>
     </form>
