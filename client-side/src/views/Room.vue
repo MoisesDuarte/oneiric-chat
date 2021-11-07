@@ -16,8 +16,8 @@
       </ul>
     </section>
 
-    <section class="room-messages" ref="roomMessages">
-      <ul>
+    <section class="room-messages">
+      <ul ref="messagesContainer">
         <li v-for="({ username, text, time }, index) in messages" :key="index">
           <div class="user"><b>{{ username }}</b> - {{ time }}</div>
           <div class="message">{{ text }}</div>
@@ -29,13 +29,9 @@
       <AppInput
         id="message-input"
         v-model="sentMsg"
+        placeholder="Write message and press enter to send"
         @keydown.enter="onSendMessage()"
       />
-      <AppButton 
-        color="primary"
-        @click="onSendMessage()">
-        Send
-      </AppButton>
     </section>
   </div>
 </template>
@@ -57,7 +53,16 @@ export default {
       roomName: '',
       users: [],
       messages: [],
+      messagesCounter: 0,
       sentMsg: '',
+    }
+  },
+  watch: {
+    messagesCounter: function() {
+      this.$nextTick(function() {
+        const messageContainer = this.$refs.messagesContainer;
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+      });
     }
   },
   methods: {
@@ -67,11 +72,15 @@ export default {
       router.push({ name: 'Login' });
     },
     onSendMessage() {
+      if (this.sentMsg === '') {
+        return;
+      }
+
       this.$socket.emit('chatMessage', this.sentMsg);
       this.sentMsg = '';
     },
   },
-  created() {
+  mounted() {
     const session = this.$cookies.get('USER');
 
     if (session) {
@@ -83,12 +92,16 @@ export default {
       });
 
       this.$socket.on('message', msg => {
-        this.messages.push(msg);
+        this.messages.push(msg);       
+        this.messagesCounter = this.messages.length;
       });
     } else {
       router.push({ name: 'Login' });
     }    
   },
+  beforeUnmount() {
+    this.$cookies.remove('USER');
+  }
 }
 </script>
 
@@ -137,13 +150,15 @@ export default {
   .room-messages { 
     grid-area: messages; 
     height: 300px;
-    padding: 8px;
-    overflow-y: scroll;
 
     ul {
+      height: 100%;
       list-style: none;
       margin: 0;
       padding: 0;
+      padding: 8px;
+      overflow: hidden;
+      overflow-y: scroll;
 
       li {
         margin-bottom: 16px;
