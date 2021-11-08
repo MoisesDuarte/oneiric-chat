@@ -1,7 +1,7 @@
 # Oneiric Chat
 
 ## Description
-Vue 3 + Node chat with rooms using socket.io library
+Vue 3 + Node chat service socket.io library, with dedicated rooms for sharing your dreams/nightmares with other people. Choose an username and a room and starting sharing your story!
 
 ## Project Setup
 
